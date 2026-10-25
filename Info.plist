@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<plist version="1.0"><dict>
-<key>CFBundleIdentifier</key><string>com.taxsnap.site</string>
-<key>CFBundleName</key><string>TaxSnap.site</string>
-<key>NSLocationWhenInUseUsageDescription</key><string>TaxSnap.site tracks business mileage to calculate 45p/mile HMRC claims</string>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key><string>Track trips in background for mileage claims</string>
-<key>NSCameraUsageDescription</key><string>Scan receipts for HMRC tax claims</string>
-</dict></plist>
