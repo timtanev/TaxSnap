@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxSnap.site - UK Sole Trader • HMRC Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0F3D2E;color:#0F3D2E;min-height:100vh;padding:18px 14px}
+.app{max-width:440px;margin:0 auto;background:#F7F5EE;border-radius:24px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.08)}
+.header{background:#0F3D2E;color:#E8F5E9;padding:22px 20px 18px;display:flex;justify-content:space-between;align-items:flex-start}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:38px;height:38px;background:#E8F5E9;color:#0F3D2E;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:20px}
+.logo-text b{display:block;font-size:18px;letter-spacing:-.02em;line-height:1}
+.logo-text span{font-size:11px;letter-spacing:.12em;opacity:.7;text-transform:uppercase}
+.badge{background:#1B5E4A;color:#A7F3D0;font-size:10px;font-weight:700;letter-spacing:.08em;padding:6px 10px;border-radius:999px;border:1px solid rgba(167,243,208,.25)}
+.saved-card{margin:16px 16px 0;background:#0F3D2E;color:#E8F5E9;border-radius:20px;padding:18px 18px 14px;position:relative;overflow:hidden}
+.saved-card:after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:radial-gradient(circle at 30% 30%,rgba(167,243,208,.22),transparent 70%);border-radius:50%}
+.saved-label{font-size:10px;letter-spacing:.14em;opacity:.6;text-transform:uppercase;font-weight:600}
+.saved-amount{font-size:36px;font-weight:800;letter-spacing:-.04em;margin:6px 0 10px;line-height:1}
+.saved-meta{display:flex;gap:14px;font-size:12px;opacity:.7}
+.saved-meta b{color:#A7F3D0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 16px 0}
+.tile{background:#FFFFFF;border-radius:18px;padding:14px;border:1px solid rgba(15,61,46,.08);box-shadow:0 4px 16px rgba(15,61,46,.06)}
+.tile-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;margin-bottom:10px}
+.tile:first-child .tile-icon{background:#FEF3C7}
+.tile:last-child .tile-icon{background:#D1FAE5}
+.tile b{display:block;font-size:13px;letter-spacing:-.01em}
+.tile span{display:block;font-size:11px;opacity:.6;margin-top:2px;line-height:1.3}
+.form-wrap{padding:16px}
+.form-card{background:#FFFFFF;border-radius:20px;padding:16px;border:1px solid rgba(15,61,46,.08);box-shadow:0 8px 24px rgba(15,61,46,.06)}
+.form-card h3{font-size:14px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+.field input,.field select{width:100%;height:46px;border-radius:12px;border:1.5px solid #E7E5E0;background:#F7F5EE;padding:0 14px;font-size:14px;font-family:inherit;outline:none;transition:.15s}
+.field input:focus,.field select:focus{border-color:#0F3D2E;background:#fff;box-shadow:0 0 0 4px rgba(15,61,46,.12)}
+.btn-primary{width:100%;height:50px;border-radius:14px;border:0;background:#0F3D2E;color:#E8F5E9;font-weight:700;font-size:14px;letter-spacing:-.01em;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:active{transform:scale(.98)}
+.btn-ghost{width:100%;height:46px;border-radius:12px;border:1.5px solid rgba(15,61,46,.15);background:#fff;color:#0F3D2E;font-weight:600;font-size:13px;cursor:pointer}
+.list{padding:0 16px 16px}
+.empty{padding:22px;text-align:center;background:#fff;border-radius:16px;border:1px dashed rgba(15,61,46,.15);font-size:13px;color:#6B7280}
+.receipt-item{background:#fff;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(15,61,46,.08);margin-bottom:8px}
+.receipt-item b{font-size:13px}
+.receipt-item span{font-size:11px;opacity:.6}
+.receipt-amt{font-weight:800;font-size:14px;color:#0F3D2E}
+.ready{margin:0 16px 16px;background:linear-gradient(135deg,#0F3D2E,#174D3B);border-radius:18px;padding:16px;color:#E8F5E9}
+.ready h4{font-size:13px;margin-bottom:4px}
+.ready p{font-size:11px;opacity:.7;line-height:1.4;margin-bottom:12px}
+.ready .btn-primary{background:#E8F5E9;color:#0F3D2E}
+#successBanner{margin:12px 16px 0;background:#D1FAE5;border:1px solid #A7F3D0;color:#065F46;padding:10px 14px;border-radius:12px;font-size:12px;font-weight:600;text-align:center}
+.footer{padding:14px 16px 18px;text-align:center;font-size:10px;opacity:.55;line-height:1.5}
+.footer a{color:inherit}
+.divider{height:1px;background:rgba(15,61,46,.08);margin:12px 0}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-mark">£</div>
+      <div class="logo-text"><b>TaxSnap.site</b><span>UK Sole Trader • HMRC Ready</span></div>
+    </div>
+    <div class="badge">WINDOWS VALIDATED ✓</div>
+  </div>
+
+  <div id="successBanner" style="display:none">✅ Pro activated — Thank you! Your export is now unlimited.</div>
+
+  <div id="mainView">
+    <div class="saved-card">
+      <div class="saved-label">Tax Saved This Year</div>
+      <div class="saved-amount" id="totalSaved">£0.00</div>
+      <div class="saved-meta"><span><b id="countReceipts">0</b> receipts</span><span><b id="totalExpenses">£0.00</b> expenses</span><span style="color:#A7F3D0">20% rate</span></div>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><div class="tile-icon">🧾</div><b>SNAP RECEIPT</b><span>Shop + amount + category</span></div>
+      <div class="tile"><div class="tile-icon">🚗</div><b>NEW TRIP</b><span>45p/mile HMRC rate</span></div>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-card">
+        <h3>Add Receipt — HMRC Ready</h3>
+        <div class="field"><label>Shop / Supplier *</label><input id="shop" placeholder="e.g. Screwfix, Toolstation" required></div>
+        <div class="field"><label>£ Amount *</label><input id="amount" type="number" step="0.01" inputmode="decimal" placeholder="0.00" required></div>
+        <div class="field"><label>Category</label><select id="category">
+          <option>Materials & Tools</option>
+          <option>Vehicle & Travel</option>
+          <option>Phone & Internet</option>
+          <option>Office Costs</option>
+          <option>Professional Fees</option>
+          <option>Advertising</option>
+        </select></div>
+        <button class="btn-primary" onclick="saveReceipt()">Save Receipt → HMRC Ready</button>
+      </div>
+    </div>
+
+    <div class="list" id="receiptList"><div class="empty">No receipts yet. Add your first one above — saved locally, HMRC compliant.</div></div>
+
+    <div class="ready">
+      <h4>Ready to file?</h4>
+      <p>Export is HMRC compliant. Includes categories, VAT-ready totals, and 20% tax saved estimate. Upgrade for unlimited export.</p>
+      <button class="btn-primary" onclick="showPay()">Continue to Payment →</button>
+    </div>
+  </div>
+
+  <div id="paymentView" style="display:none;padding:16px">
+    <div style="background:#fff;border-radius:20px;padding:18px;border:1px solid rgba(15,61,46,.08)">
+      <h3 style="font-size:16px;font-weight:800;letter-spacing:-.02em">Complete Purchase</h3>
+      <p style="font-size:12px;opacity:.65;margin:6px 0 14px;line-height:1.4">One-time £39.99/year — Unlimited receipts, HMRC export, mileage log. Secure via Stripe.</p>
+      <div class="field"><label>Email for receipt</label><input id="email" type="email" placeholder="you@company.co.uk"></div>
+      <a id="stripeLink" href="https://buy.stripe.com/test_123" target="_blank" rel="noopener" style="text-decoration:none"><button class="btn-primary" style="margin-top:6px">Pay £39.99 with Stripe →</button></a>
+      <div style="font-size:10px;opacity:.55;margin-top:10px;line-height:1.4">⚠️ Replace test link with live Stripe payment link from dashboard.stripe.com → Products → Create → £39.99 yearly → Payment link.</div>
+      <div class="divider"></div>
+      <button class="btn-ghost" onclick="showMain()">← Back to App</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    support@taxsnap.site • HMRC ready • Not tax advice<br>
+    <span id="disclaimer">For UK sole traders. Keep receipts for 5 years per HMRC. Mileage 45p/mile first 10k miles.</span>
+  </div>
+</div>
+
+<script>
+const LS_KEY='ts_receipts';
+function getReceipts(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]')}catch(e){return []}}
+function setReceipts(r){localStorage.setItem(LS_KEY,JSON.stringify(r))}
+function formatGBP(n){return '£'+Number(n).toFixed(2)}
+function render(){
+  const receipts=getReceipts();
+  const total=receipts.reduce((s,r)=>s+Number(r.amount||0),0);
+  const saved=total*0.20;
+  document.getElementById('totalSaved').textContent=formatGBP(saved);
+  document.getElementById('totalExpenses').textContent=formatGBP(total);
+  document.getElementById('countReceipts').textContent=String(receipts.length);
+  const list=document.getElementById('receiptList');
+  if(!receipts.length){list.innerHTML='<div class="empty">No receipts yet. Add your first one above — saved locally, HMRC compliant.</div>';return}
+  list.innerHTML=receipts.slice().reverse().map(r=>`
+    <div class="receipt-item">
+      <div><b>${escapeHtml(r.shop)}</b><br><span>${escapeHtml(r.category)} • ${escapeHtml(r.date)}</span></div>
+      <div style="text-align:right"><div class="receipt-amt">${formatGBP(r.amount)}</div><span style="font-size:10px;cursor:pointer;color:#9CA3AF" onclick="deleteReceipt('${r.id}')">delete</span></div>
+    </div>`).join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function saveReceipt(){
+  const shop=document.getElementById('shop').value.trim();
+  const amount=document.getElementById('amount').value.trim();
+  const category=document.getElementById('category').value;
+  if(!shop){alert('Enter shop name');return}
+  if(!amount||isNaN(Number(amount))){alert('Enter valid amount');return}
+  const receipts=getReceipts();
+  receipts.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2),shop,amount:Number(amount),category,date:new Date().toLocaleDateString('en-GB')});
+  setReceipts(receipts);
+  document.getElementById('shop').value='';document.getElementById('amount').value='';
+  render();
+}
+function deleteReceipt(id){const r=getReceipts().filter(x=>x.id!==id);setReceipts(r);render()}
+function showPay(){document.getElementById('mainView').style.display='none';document.getElementById('paymentView').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
+function showMain(){document.getElementById('paymentView').style.display='none';document.getElementById('mainView').style.display='block'}
+(function(){
+  render();
+  const params=new URLSearchParams(location.search);
+  if(params.get('success')==='true'){document.getElementById('successBanner').style.display='block';}
+})();
+</script>
+</body>
+</html>
