@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Success - TaxSnap</title>
+<style>body{margin:0;background:#F5F5F0;font-family:Inter,system-ui;display:grid;place-items:center;min-height:100vh;padding:20px}
+.card{background:white;border-radius:28px;padding:32px;max-width:440px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(15,61,46,.1);border:1px solid #E8E6DE}
+.btn{background:#0F3D2E;color:white;border:0;border-radius:16px;padding:16px 24px;font-weight:700;width:100%;cursor:pointer;margin-top:16px;display:block;text-decoration:none}
+</style></head><body><div class="card"><div style="width:64px;height:64px;background:#C6F277;border-radius:20px;display:grid;place-items:center;margin:0 auto 16px;font-size:32px">✓</div><h1 style="margin:0 0 8px">Payment Successful!</h1><p style="color:#666;font-size:14px">TaxSnap Pro unlocked. ts_pro set to true. Redirecting...</p><a class="btn" href="/index.html?success=true">Continue to App (Pro) →</a></div>
+<script>
+localStorage.setItem('ts_pro','true');
+localStorage.setItem('ts_scans','0');
+setTimeout(()=>{location.href='/index.html?success=true';},1500);
+</script></body></html>
