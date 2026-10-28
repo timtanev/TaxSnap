@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Successful — TaxSnap.site</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F5F5F0;min-height:100vh;display:grid;place-items:center;padding:22px}
+.card{max-width:440px;width:100%;background:#fff;border:1px solid #E5E7EB;border-radius:24px;padding:32px;text-align:center}
+h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin:12px 0 8px}
+p{color:#6B7280;font-size:14px;line-height:1.5}
+.btn{width:100%;height:52px;border-radius:999px;background:#0F3D2E;color:#fff;border:none;font-weight:600;font-size:15px;cursor:pointer;margin-top:20px}
+.small{font-size:11px;color:#9CA3AF;margin-top:12px}
+a{color:#0F3D2E;font-weight:600}
+</style>
+</head>
+<body>
+<div class="card">
+  <div style="font-size:48px">✅</div>
+  <h1>Payment Successful</h1>
+  <p>Welcome to TaxSnap PRO. Your 7-day free trial started. Unlimited scans, HMRC CSV, 45p/mile, priority support unlocked.</p>
+  <p style="margin-top:10px;font-size:12px">Live Stripe link: <a href="https://buy.stripe.com/dRm00cbila0raJxgM73sI00" target="_blank">https://buy.stripe.com/dRm00cbila0raJxgM73sI00</a></p>
+  <button class="btn" onclick="window.location.href='index.html?success=true'">Continue to App</button>
+  <div class="small">Auto-redirecting to index.html?success=true in 3 seconds… Secure checkout via Stripe • Cancel anytime</div>
+</div>
+<script>
+localStorage.setItem('ts_pro','true');
+setTimeout(()=>{ window.location.href='index.html?success=true'; }, 3000);
+</script>
+</body>
+</html>
