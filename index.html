@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>TaxSnap.site - UK Sole Trader • HMRC Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui;background:#F5F5F0;color:#0F3D2E;min-height:100vh}
+.wrap{max-width:440px;margin:0 auto;min-height:100vh;background:#fff;position:relative;overflow:hidden;box-shadow:0 20px 80px rgba(15,61,46,0.08)}
+.view{display:none;min-height:100vh;padding:20px 20px 32px}
+.view.active{display:block}
+.logo{width:64px;height:64px;border-radius:50%;background:#0F3D2E;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px}
+.card{background:#fff;border:1px solid #E8E6E0;border-radius:24px;padding:20px}
+.btn{border:0;border-radius:16px;padding:14px 18px;font-weight:600;cursor:pointer;width:100%;display:block;text-align:center;text-decoration:none}
+.btn-primary{background:#0F3D2E;color:#fff}
+.btn-ghost{background:#F5F5F0;color:#0F3D2E}
+.badge{background:#0F3D2E;color:#fff;font-size:11px;padding:4px 8px;border-radius:99px;letter-spacing:0.5px}
+.shake{animation:shake 0.35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.paywall{position:absolute;inset:0;background:rgba(255,255,255,0.88);backdrop-filter:blur(8px);z-index:20;display:flex;align-items:center;justify-content:center;padding:20px}
+.tile{border-radius:24px;padding:18px;background:#0F3D2E;color:#fff;cursor:pointer;min-height:110px;display:flex;flex-direction:column;justify-content:space-between}
+.tile-light{background:#F5F5F0;color:#0F3D2E;border:1px solid #E8E6E0}
+.key{display:flex;flex-wrap:wrap;gap:8px}
+.key button{width:31%;padding:14px;border-radius:14px;border:1px solid #E8E6E0;background:#fff;font-weight:600;cursor:pointer}
+input,select{width:100%;padding:12px 14px;border-radius:14px;border:1px solid #E8E6E0;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- LANDING VIEW -->
+  <div id="landingView" class="view active">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 0 12px">
+      <div class="logo">£</div>
+      <h1 style="font-size:28px;margin:12px 0 4px">TaxSnap.site</h1>
+      <p style="font-size:13px;color:#6B7C75;letter-spacing:0.6px">UK Sole Trader • HMRC Ready • WINDOWS VALIDATED</p>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h3 style="font-size:16px;margin-bottom:12px">Choose your plan</h3>
+      <div style="border:2px solid #0F3D2E;border-radius:18px;padding:14px;margin-bottom:10px;position:relative">
+        <span class="badge" style="position:absolute;top:-10px;right:12px">Most Popular</span>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><b>Pro Yearly</b><div style="font-size:12px;color:#6B7C75">£39.99/year (save 60%)</div></div>
+          <b>£39.99</b>
+        </div>
+        <button class="btn btn-primary" style="margin-top:10px" onclick="showPay('yearly')">Subscribe Yearly</button>
+      </div>
+      <div style="border:1px solid #E8E6E0;border-radius:18px;padding:14px;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between"><b>Pro Weekly</b><b>£4.99</b></div>
+        <button class="btn btn-ghost" style="margin-top:10px" onclick="showPay('weekly')">Subscribe Weekly</button>
+      </div>
+      <div style="border:1px solid #E8E6E0;border-radius:18px;padding:14px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between"><b>Pro Monthly</b><b>£9.99</b></div>
+        <button class="btn btn-ghost" style="margin-top:10px" onclick="showPay('monthly')">Subscribe Monthly</button>
+      </div>
+      <div style="border-top:1px solid #E8E6E0;padding-top:14px">
+        <input id="loginEmail" placeholder="Email" style="margin-bottom:8px">
+        <input id="loginPass" type="password" placeholder="Password" style="margin-bottom:8px">
+        <button class="btn btn-primary" onclick="doLogin()">Log In (demo)</button>
+        <button class="btn btn-ghost" style="margin-top:8px" onclick="doGuest()">Continue as Guest (5 free scans)</button>
+        <p style="font-size:11px;color:#6B7C75;text-align:center;margin-top:10px">5 free receipt scans, then Pro required. HMRC compliant.</p>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:12px;color:#6B7C75;margin-top:14px">
+      Already have account? <a href="#" onclick="showLogin();return false" style="color:#0F3D2E">Log In</a> • support@taxsnap.site • <a href="#" style="color:#0F3D2E">Blog 6 guides</a>
+    </div>
+  </div>
+
+  <!-- MAIN VIEW -->
+  <div id="mainView" class="view">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;gap:10px;align-items:center"><div class="logo" style="width:40px;height:40px;font-size:18px">£</div><div><b id="userEmailDisplay"></b><div style="font-size:11px;color:#6B7C75">UK Sole Trader • HMRC Ready</div></div></div>
+      <div id="proBadge" style="display:none" class="badge">PRO</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+      <div class="card"><div style="font-size:11px;color:#6B7C75">TAX SAVED THIS YEAR</div><div style="font-size:22px;font-weight:700" id="taxSaved">£0.00</div><div style="font-size:11px;color:#6B7C75"><span id="receiptCount">0</span> receipts • <span id="tripMiles">0</span> miles • WINDOWS VALIDATED</div></div>
+      <div class="card" style="background:#F5F5F0"><div style="font-size:11px">READY TO FILE?</div><button class="btn btn-primary" style="margin-top:8px;padding:8px" onclick="showPay()">Continue to Payment</button></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+      <div class="tile" onclick="captureCamera()"><div style="font-size:12px;opacity:0.8">SNAP RECEIPT</div><div style="font-size:20px;font-weight:700">📸 Camera<br><span style="font-size:12px;font-weight:400;opacity:0.8">+ Gallery fallback</span></div></div>
+      <div class="tile tile-light" onclick="startGPS()"><div style="font-size:12px">NEW TRIP</div><div style="font-size:18px;font-weight:700">📍 GPS Track<br><span style="font-size:12px;font-weight:400">haversine miles</span></div></div>
+    </div>
+    <div id="paywallOverlay" style="display:none" class="paywall"><div class="card" style="text-align:center;max-width:300px"><h3>Scan limit reached</h3><p style="font-size:13px;color:#6B7C75;margin:8px 0">5 free scans used. Upgrade to continue.</p><button class="btn btn-primary" onclick="showPay()">Unlock Pro £39.99/year</button></div></div>
+    <video id="camVideo" autoplay playsinline style="display:none;width:100%;border-radius:18px;margin-top:12px"></video>
+    <canvas id="camCanvas" style="display:none"></canvas>
+    <div class="card" style="margin-top:12px">
+      <h4>Add Receipt</h4>
+      <input id="shopInput" placeholder="Shop (required)" style="margin-top:8px">
+      <div class="key" style="margin-top:8px">
+        <button onclick="appendAmt('1')">1</button><button onclick="appendAmt('2')">2</button><button onclick="appendAmt('3')">3</button>
+        <button onclick="appendAmt('4')">4</button><button onclick="appendAmt('5')">5</button><button onclick="appendAmt('6')">6</button>
+        <button onclick="appendAmt('7')">7</button><button onclick="appendAmt('8')">8</button><button onclick="appendAmt('9')">9</button>
+        <button onclick="appendAmt('.')">.</button><button onclick="appendAmt('0')">0</button><button onclick="clearAmt()">⌫</button>
+      </div>
+      <input id="amountInput" placeholder="£0.00" readonly style="margin-top:8px;background:#F5F5F0">
+      <select id="categorySelect" style="margin-top:8px"><option>Office Costs</option><option>Travel</option><option>Clothing</option><option>Stock</option><option>Advertising</option><option>Professional</option></select>
+      <button class="btn btn-primary" style="margin-top:10px" onclick="saveReceipt()">Save Receipt</button>
+      <input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="handleGallery(this)">
+      <button class="btn btn-ghost" style="margin-top:8px" onclick="document.getElementById('galleryInput').click()">Upload from Gallery</button>
+    </div>
+    <div class="card" style="margin-top:12px"><h4>Receipts</h4><div id="receiptList" style="margin-top:8px"></div></div>
+    <div class="card" style="margin-top:12px"><h4>Trips</h4><div id="tripList" style="margin-top:8px"></div></div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-ghost" onclick="exportCSV('hmrc')">Export HMRC CSV</button><button class="btn btn-ghost" onclick="exportCSV('accountant')">Export Accountant CSV</button></div>
+  </div>
+
+  <!-- PAYMENT VIEW -->
+  <div id="paymentView" class="view">
+    <div style="text-align:center;padding-top:16px"><div class="logo" style="margin:0 auto">£</div><h2 style="margin-top:12px">Complete Purchase</h2><p style="color:#6B7C75">TaxSnap Pro - £39.99/year</p></div>
+    <div class="card" style="margin-top:16px">
+      <input id="payEmail" placeholder="Email for receipt" style="margin-bottom:10px">
+      <a class="btn btn-primary" href="https://buy.stripe.com/test_123" target="_blank" rel="noopener">Pay £39.99 with Stripe</a>
+      <button class="btn btn-ghost" style="margin-top:10px" onclick="activatePro()">Continue to App (Pro) - Demo</button>
+      <button class="btn btn-ghost" style="margin-top:8px" onclick="showMain()">Back to App</button>
+      <p style="font-size:11px;color:#6B7C75;text-align:center;margin-top:10px">Secure checkout • HMRC compliant • Cancel anytime</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let receipts = JSON.parse(localStorage.getItem('ts_receipts')||'[]');
+let trips = JSON.parse(localStorage.getItem('ts_trips')||'[]');
+let scans = parseInt(localStorage.getItem('ts_scans')||localStorage.getItem('taxsnap_scans')||'0');
+let isPro = localStorage.getItem('ts_pro')==='true';
+let user = localStorage.getItem('ts_user')||'';
+let watchId=null, lastPos=null, curTrip={miles:0, points:[]};
+let amountStr='';
+let capturedThumb='';
+
+function qs(id){return document.getElementById(id)}
+function showLanding(){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));qs('landingView').classList.add('active')}
+function showMain(){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));qs('mainView').classList.add('active');render();checkLimit()}
+function showPay(plan){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));qs('paymentView').classList.add('active')}
+function showLogin(){showLanding(); qs('loginEmail').focus()}
+function doLogin(){
+  const email=qs('loginEmail').value.trim()||'demo@taxsnap.site';
+  localStorage.setItem('ts_user',email); user=email; showMain();
+}
+function doGuest(){localStorage.setItem('ts_user','guest@taxsnap.site');localStorage.setItem('ts_scans',scans);user='guest@taxsnap.site';showMain()}
+function doSubscribe(){showPay()}
+function appendAmt(c){if(c==='.'&&amountStr.includes('.'))return; amountStr+=c; qs('amountInput').value='£'+amountStr; }
+function clearAmt(){amountStr=amountStr.slice(0,-1); qs('amountInput').value=amountStr?'£'+amountStr:''}
+async function captureCamera(){
+  if(!isPro && scans>=5){checkLimit(); return;}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const video=qs('camVideo'); video.style.display='block'; video.srcObject=stream;
+    setTimeout(()=>{
+      const canvas=qs('camCanvas'); canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+      const ctx=canvas.getContext('2d'); ctx.drawImage(video,0,0);
+      capturedThumb=canvas.toDataURL('image/jpeg',0.6);
+      stream.getTracks().forEach(t=>t.stop()); video.style.display='none';
+      alert('Captured! Now save receipt.');
+    },900);
+  }catch(e){ qs('galleryInput').click(); }
+}
+function handleGallery(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader(); reader.onload=e=>{capturedThumb=e.target.result;}; reader.readAsDataURL(file);
+}
+function saveReceipt(){
+  const shop=qs('shopInput').value.trim();
+  if(!shop){qs('shopInput').classList.add('shake'); setTimeout(()=>qs('shopInput').classList.remove('shake'),400); return;}
+  const amt=parseFloat(amountStr||'0'); if(!amt) return alert('Enter amount');
+  if(!isPro && scans>=5){checkLimit(); return;}
+  const r={id:Date.now().toString(), shop, amount:amt, category:qs('categorySelect').value, thumb:capturedThumb, date:new Date().toISOString().slice(0,10)};
+  receipts.unshift(r); scans++; localStorage.setItem('ts_receipts',JSON.stringify(receipts)); localStorage.setItem('ts_scans',scans); localStorage.setItem('taxsnap_scans',scans);
+  amountStr=''; qs('amountInput').value=''; qs('shopInput').value=''; capturedThumb=''; render(); checkLimit();
+}
+function startGPS(){
+  if(watchId) { navigator.geolocation.clearWatch(watchId); watchId=null; if(curTrip.miles>0){ trips.unshift({id:Date.now().toString(), miles:curTrip.miles.toFixed(2), from:'Start', to:'End', date:new Date().toISOString().slice(0,10)}); localStorage.setItem('ts_trips',JSON.stringify(trips));} curTrip={miles:0, points:[]}; render(); return; }
+  if(!navigator.geolocation) return alert('GPS not supported');
+  watchId=navigator.geolocation.watchPosition(pos=>{
+    const {latitude, longitude}=pos.coords;
+    if(lastPos){ const d=haversine(lastPos.lat,lastPos.lon,latitude,longitude); curTrip.miles+=d; curTrip.points.push({latitude,longitude}); }
+    lastPos={lat:latitude,lon:longitude};
+    qs('tripList').innerHTML='<div style="padding:8px;background:#F5F5F0;border-radius:12px">Tracking... '+curTrip.miles.toFixed(2)+' miles - tap again to stop</div>'+qs('tripList').innerHTML;
+  }, err=>alert('GPS error'), {enableHighAccuracy:true});
+}
+function haversine(lat1,lon1,lat2,lon2){
+  const R=3958.8; const dLat=(lat2-lat1)*Math.PI/180; const dLon=(lon2-lon1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function render(){
+  qs('userEmailDisplay').textContent=user||'';
+  qs('proBadge').style.display=isPro?'block':'none';
+  const total=receipts.reduce((s,r)=>s+r.amount,0);
+  const milesTotal=trips.reduce((s,t)=>s+parseFloat(t.miles),0);
+  const tax=total*0.2 + milesTotal*0.45*0.2;
+  qs('taxSaved').textContent='£'+tax.toFixed(2);
+  qs('receiptCount').textContent=receipts.length;
+  qs('tripMiles').textContent=milesTotal.toFixed(1);
+  qs('receiptList').innerHTML=receipts.map(r=>`<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #E8E6E0"><img src="${r.thumb||''}" style="width:44px;height:44px;border-radius:12px;object-fit:cover;background:#F5F5F0"><div style="flex:1"><div style="font-weight:600">${r.shop} - £${r.amount.toFixed(2)}</div><div style="font-size:12px;color:#6B7C75">${r.category} • ${r.date}</div></div></div>`).join('')||'<div style="color:#6B7C75;font-size:13px">No receipts yet</div>';
+  qs('tripList').innerHTML=trips.map(t=>`<div style="padding:10px 0;border-bottom:1px solid #E8E6E0"><b>${t.miles} miles</b> <span style="font-size:12px;color:#6B7C75">${t.from} → ${t.to} • ${t.date}</span></div>`).join('')||'<div style="color:#6B7C75;font-size:13px">No trips</div>';
+}
+function exportCSV(type){
+  let csv='Shop,Amount,Category,Date\n'+receipts.map(r=>`${r.shop},${r.amount},${r.category},${r.date}`).join('\n');
+  if(type==='accountant') csv='Date,Description,Amount,Category,Receipt\n'+receipts.map(r=>`${r.date},${r.shop},${r.amount},${r.category},yes`).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=type+'-taxsnap.csv'; a.click();
+}
+function checkLimit(){ qs('paywallOverlay').style.display=(!isPro && scans>=5)?'flex':'none'; }
+function activatePro(){ localStorage.setItem('ts_pro','true'); isPro=true; showMain(); }
+(function(){
+  const params=new URLSearchParams(location.search);
+  if(params.get('success')==='true'){ localStorage.setItem('ts_pro','true'); isPro=true; const banner=document.createElement('div'); banner.textContent='✓ Pro activated - success!'; banner.style.cssText='position:fixed;top:0;left:0;right:0;background:#0F3D2E;color:#fff;text-align:center;padding:10px;z-index:100'; document.body.appendChild(banner); setTimeout(()=>banner.remove(),3000); }
+  const hasUser=localStorage.getItem('ts_user')||localStorage.getItem('ts_pro');
+  if(hasUser){ user=localStorage.getItem('ts_user')||'pro@taxsnap.site'; showMain(); } else { showLanding(); }
+  render(); checkLimit();
+})();
+</script>
+</body>
+</html>
