@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxSnap.site — Snap receipts. Claim tax. HMRC Ready.</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#0F3D2E;--bg:#F5F5F0;--yellow:#FEF08A;--light:#F0FDF4;--border:#E5E7EB;--muted:#6B7280}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:#111827;min-height:100vh;-webkit-font-smoothing:antialiased}
+.shell{max-width:440px;margin:0 auto;min-height:100vh;padding:28px 22px 40px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.logo-icon{width:40px;height:40px;background:var(--green);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;position:relative}
+.logo-icon:after{content:'£';position:absolute;bottom:4px;right:6px;font-size:14px;opacity:0.9}
+.brand{font-size:22px;letter-spacing:-0.02em;line-height:1}
+.brand b{color:var(--green);font-weight:800}
+.brand span{color:#9CA3AF;font-weight:500}
+.h1{font-size:28px;line-height:1.15;font-weight:800;letter-spacing:-0.03em;margin:6px 0 10px;max-width:320px}
+.sub{color:#6B7280;font-size:14px;margin-bottom:18px;line-height:1.4}
+.badge-uk{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600;color:#111827;margin-bottom:20px}
+.btn{width:100%;height:52px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:600;font-size:15px;cursor:pointer;border:none;transition:transform .08s, opacity .2s}
+.btn:active{transform:scale(.98)}
+.btn-black{background:#111;color:#fff}
+.btn-white{background:#fff;border:1px solid #E5E7EB;color:#111}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:#9CA3AF;font-size:11px;letter-spacing:0.12em;font-weight:600}
+.divider:before,.divider:after{content:'';flex:1;height:1px;background:#E5E7EB}
+.label{font-size:11px;letter-spacing:0.08em;font-weight:700;color:#6B7280;margin:14px 0 8px;text-transform:uppercase}
+.input{width:100%;height:48px;border-radius:12px;border:1px solid #E5E7EB;background:#fff;padding:0 14px;font-size:15px;outline:none}
+.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(15,61,46,.12)}
+.btn-green{background:var(--green);color:#fff;margin-top:18px}
+.small{font-size:11px;color:#9CA3AF;text-align:center;margin-top:12px;line-height:1.4}
+.title-sm{font-size:12px;letter-spacing:0.08em;font-weight:800;color:#6B7280;text-transform:uppercase}
+.plan-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.plan-title{font-size:12px;font-weight:800;letter-spacing:0.08em;color:#6B7280}
+.cancel-badge{font-size:11px;font-weight:700;border:1px solid #E5E7EB;border-radius:999px;padding:4px 10px;background:#fff}
+.card{border-radius:24px;border:1px solid #E5E7EB;background:#fff;padding:16px 18px;margin-bottom:12px;position:relative;cursor:pointer;transition:border-color .2s, background .2s}
+.card.active{background:var(--light);border-color:var(--green)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.price{font-weight:800;font-size:18px}
+.price small{font-weight:500;color:#6B7280;font-size:13px}
+.badge{border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;letter-spacing:0.06em}
+.badge-yellow{background:var(--yellow);color:#854D0E}
+.badge-green{background:var(--green);color:#fff}
+.pill{border-radius:999px;padding:4px 8px;background:#F3F4F6;font-size:12px;font-weight:600;color:#6B7280;display:inline-flex;align-items:center}
+.desc{font-size:12px;color:#6B7280;margin-top:6px}
+.radio{width:22px;height:22px;border-radius:999px;border:2px solid #D1D5DB;display:grid;place-items:center;flex-shrink:0;background:#fff}
+.card.active .radio{border-color:var(--green);background:var(--green);color:#fff}
+.radio:after{content:''}
+.card.active .radio:after{content:'✓';font-size:12px;font-weight:800}
+.btn-continue{margin-top:14px;background:var(--green);color:#fff}
+.meta{font-size:11px;color:#9CA3AF;text-align:center;margin:10px 0}
+.link{color:var(--green);font-weight:600;font-size:12px;text-decoration:underline;cursor:pointer}
+.unlock{margin-top:28px;background:#fff;border:1px solid #E5E7EB;border-radius:24px;padding:18px}
+.unlock h4{font-size:12px;letter-spacing:0.08em;font-weight:800;color:#111827;margin-bottom:12px}
+.unlock li{list-style:none;display:flex;gap:10px;font-size:13px;color:#374151;margin-bottom:10px}
+.unlock li:before{content:'✓';width:20px;height:20px;border-radius:999px;background:var(--light);color:var(--green);display:grid;place-items:center;font-weight:800;font-size:11px;flex-shrink:0}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.kpi-box{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:14px}
+.kpi-big{font-size:28px;font-weight:800;letter-spacing:-0.02em}
+.tile{border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:1px solid #E5E7EB}
+.tile-snap{background:var(--green);color:#fff}
+.tile-trip{background:#fff;color:#111827}
+.hidden{display:none !important}
+.form{background:#fff;border:1px solid #E5E7EB;border-radius:20px;padding:16px;margin-top:12px}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.shake{animation:shake .35s ease}
+</style>
+</head>
+<body>
+<!-- AUTH VIEW - EXACT original -->
+<div id="authView" class="shell">
+  <div class="logo">
+    <div class="logo-icon">◫</div>
+    <div class="brand"><b>TaxSnap</b><span>.site</span></div>
+  </div>
+  <div class="h1">Snap receipts. Claim tax. HMRC Ready.</div>
+  <div class="sub">Built for UK self-employed. 20% tax relief on every valid expense.</div>
+  <div class="badge-uk">🇬🇧 UK • 5 free scans to start</div>
+
+  <button class="btn btn-black" onclick="doApple()"> Continue with Apple</button>
+  <div style="height:10px"></div>
+  <button class="btn btn-white" onclick="doGoogle()"><span style="font-weight:700;color:#4285F4">G</span> Continue with Google</button>
+
+  <div class="divider">OR EMAIL</div>
+
+  <div class="label">Email</div>
+  <input id="emailInput" class="input" placeholder="you@business.co.uk" type="email" />
+
+  <div class="label">Password</div>
+  <input id="passwordInput" class="input" placeholder="••••••••" type="password" />
+
+  <button class="btn btn-green" onclick="doCreate()">Create account — 5 free scans</button>
+  <div class="small">By continuing you agree to Terms & Privacy. 5 free scans, then choose plan.<br>HMRC compliant • Secure • Cancel anytime</div>
+</div>
+
+<!-- PLAN VIEW - EXACT payment page -->
+<div id="planView" class="shell" style="display:none">
+  <div class="plan-header">
+    <div class="plan-title">CHOOSE YOUR PLAN</div>
+    <div class="cancel-badge">Cancel anytime</div>
+  </div>
+
+  <div class="card" id="cardWeekly" onclick="selectPlan('weekly')">
+    <div class="card-top">
+      <div>
+        <div class="price">£4.99 <small>/week</small> <span class="badge badge-yellow" style="margin-left:6px">7-DAY FREE TRIAL</span></div>
+        <div class="desc">Billed weekly • 7-day free trial</div>
+      </div>
+      <div class="radio" id="radioWeekly"></div>
+    </div>
+  </div>
+
+  <div class="card active" id="cardYearly" onclick="selectPlan('yearly')">
+    <div class="card-top">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="price">£39.99 <small>/year</small></div>
+          <span class="pill">£3.33/month</span>
+          <span class="badge badge-green">MOST POPULAR</span>
+          <span class="badge badge-yellow">Save 68%</span>
+        </div>
+        <div class="desc"><span style="color:#059669;font-weight:700">Billed yearly BEST VALUE • Most popular</span> • Save 68% vs weekly / £259.48 if weekly</div>
+      </div>
+      <div class="radio" id="radioYearly"></div>
+    </div>
+  </div>
+
+  <div class="card" id="cardMonthly" onclick="selectPlan('monthly')">
+    <div class="card-top">
+      <div>
+        <div class="price">£9.99 <small>/month</small></div>
+        <div class="desc">Billed monthly</div>
+      </div>
+      <div class="radio" id="radioMonthly"></div>
+    </div>
+  </div>
+
+  <button class="btn btn-continue" onclick="payYearly()">Continue → • £39.99/year</button>
+  <div class="meta">Secure checkout via Stripe • Cancel anytime • 7-day free trial</div>
+  <div style="text-align:center;margin-top:4px">
+    <a href="https://buy.stripe.com/dRm00cbila0raJxgM73sI00" target="_blank" style="font-size:10px;color:#9CA3AF;word-break:break-all;text-decoration:underline">https://buy.stripe.com/dRm00cbila0raJxgM73sI00</a>
+  </div>
+  <div class="meta" id="selectedText">Selected: yearly • Click Continue uses window.open</div>
+  <div style="text-align:center;margin-top:8px"><span class="link" onclick="alert('Stripe Customer Portal - manage at https://billing.stripe.com')">Manage Subscription</span></div>
+
+  <div class="unlock">
+    <h4>WHAT YOU UNLOCK</h4>
+    <li>Unlimited scans — No limits after PRO</li>
+    <li>HMRC CSV — Ready for Self Assessment</li>
+    <li>Accountant CSV — Send to accountant</li>
+    <li>45p/mile — HMRC approved mileage</li>
+    <li>Priority Support — We help with filing</li>
+  </div>
+
+  <button class="btn btn-white" style="margin-top:16px" onclick="showMain()">← Back to App</button>
+</div>
+
+<!-- MAIN VIEW - Dashboard -->
+<div id="mainView" class="shell" style="display:none">
+  <div class="logo" style="justify-content:space-between">
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="logo-icon">◫</div>
+      <div class="brand"><b>TaxSnap</b><span>.site</span></div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <span id="proBadge" class="badge badge-green hidden">PRO</span>
+      <span class="badge" style="background:#fff;border:1px solid #E5E7EB">WINDOWS VALIDATED</span>
+    </div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-box">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#6B7280">TAX SAVED THIS YEAR</div>
+      <div id="taxSaved" class="kpi-big">£0.00</div>
+    </div>
+    <div class="kpi-box">
+      <div style="font-size:11px;color:#6B7280" id="kpiMeta">0 receipts • £0.00 expenses • 0.0 miles</div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="badge" style="background:#F3F4F6">Total Expenses: <b id="totalExpenses">£0.00</b></span>
+        <span class="badge" style="background:#F3F4F6">Mileage: <b id="totalMileage">£0.00</b></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="tile tile-snap" onclick="openSnap()">
+      <div style="font-size:22px">📸</div>
+      <div style="font-weight:700">SNAP RECEIPT</div>
+      <div style="font-size:11px;opacity:.8" id="scanInfo">5 free to start</div>
+    </div>
+    <div class="tile tile-trip" onclick="openTrip()">
+      <div style="font-size:22px">📍</div>
+      <div style="font-weight:700">NEW TRIP</div>
+      <div style="font-size:11px;color:#6B7280">Start GPS tracking</div>
+    </div>
+  </div>
+
+  <div id="snapForm" class="form hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <b>Snap Receipt</b><span style="cursor:pointer" onclick="closeSnap()">✕</span>
+    </div>
+    <div class="label">Merchant</div><input id="rMerchant" class="input" placeholder="Tesco, Shell..." />
+    <div class="label">Amount £</div><input id="rAmount" class="input" placeholder="12.50" type="number" step="0.01" />
+    <div class="label">Category</div>
+    <select id="rCategory" class="input"><option>Fuel</option><option>Meals</option><option>Office</option><option>Travel</option><option>Materials</option><option>Other</option></select>
+    <button class="btn btn-green" style="margin-top:12px" onclick="saveReceipt()">Save Receipt • Claim 20%</button>
+  </div>
+
+  <div id="tripForm" class="form hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <b>New Trip</b><span style="cursor:pointer" onclick="closeTrip()">✕</span>
+    </div>
+    <div class="label">From</div><input id="tFrom" class="input" placeholder="Home" />
+    <div class="label">To</div><input id="tTo" class="input" placeholder="Client site" />
+    <div class="label">Miles</div><input id="tMiles" class="input" placeholder="24.5" type="number" step="0.1" />
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-white" style="flex:1" onclick="startGPS()">📍 Use GPS</button>
+      <button class="btn btn-green" style="flex:1" onclick="saveTrip()">Save Trip • 45p/mile</button>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="title-sm" style="margin-bottom:10px">Receipts</div>
+    <div id="receiptList" style="display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="title-sm" style="margin-bottom:10px">Trips</div>
+    <div id="tripList" style="display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-top:20px">
+    <button class="btn btn-white" style="flex:1;font-size:13px" onclick="exportHMRC()">HMRC CSV</button>
+    <button class="btn btn-white" style="flex:1;font-size:13px" onclick="exportAccountant()">Accountant CSV</button>
+  </div>
+
+  <button class="btn btn-green" style="margin-top:14px" onclick="showPlan()">Ready to file? Continue to Payment →</button>
+  <div class="small" style="margin-top:10px"><span class="link" onclick="showAuth()">Logout</span> • <span id="userEmail" style="color:#6B7280"></span></div>
+</div>
+
+<!-- SUCCESS VIEW -->
+<div id="successView" class="shell" style="display:none;text-align:center;padding-top:80px">
+  <div style="font-size:48px;margin-bottom:16px">✅</div>
+  <div style="font-size:26px;font-weight:800;letter-spacing:-0.02em">Payment Successful</div>
+  <div style="color:#6B7280;margin-top:8px;font-size:14px">Your PRO access is unlocked. 7-day free trial started.</div>
+  <button class="btn btn-green" style="margin-top:22px" onclick="continueToApp()">Continue to App</button>
+  <div class="small" style="margin-top:12px">Redirecting to app in 3 seconds…</div>
+</div>
+
+<script>
+const STRIPE_LINK = 'https://buy.stripe.com/dRm00cbila0raJxgM73sI00';
+let selectedPlan = 'yearly';
+const LS = { receipts:'ts_receipts', trips:'ts_trips', scans:'ts_scans', pro:'ts_pro', user:'ts_user' };
+
+function hideAll(){ ['authView','planView','mainView','successView'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; }); }
+function showAuth(){ hideAll(); document.getElementById('authView').style.display='block'; }
+function showMain(){ hideAll(); document.getElementById('mainView').style.display='block'; render(); }
+function showPlan(){ hideAll(); document.getElementById('planView').style.display='block'; }
+function showPay(){ return showPlan(); }
+
+function selectPlan(p){
+  selectedPlan = p;
+  document.querySelectorAll('#planView .card').forEach(c=>c.classList.remove('active'));
+  const map={weekly:'cardWeekly',yearly:'cardYearly',monthly:'cardMonthly'};
+  const el=document.getElementById(map[p]); if(el) el.classList.add('active');
+  const txt=document.getElementById('selectedText'); if(txt) txt.textContent='Selected: '+p+' • Click Continue uses window.open';
+  const btn=document.querySelector('#planView .btn-continue');
+  if(btn){
+    const price = p==='yearly'?'£39.99/year': p==='weekly'?'£4.99/week':'£9.99/month';
+    btn.textContent='Continue → • '+price;
+  }
+}
+
+function doApple(){
+  const email='apple.user@taxsnap.site';
+  localStorage.setItem(LS.user, email);
+  if(!localStorage.getItem(LS.scans)) localStorage.setItem(LS.scans,'5');
+  showMain();
+}
+function doGoogle(){
+  const email='google.user@taxsnap.site';
+  localStorage.setItem(LS.user, email);
+  if(!localStorage.getItem(LS.scans)) localStorage.setItem(LS.scans,'5');
+  showMain();
+}
+function doCreate(){
+  const emailEl=document.getElementById('emailInput');
+  const passEl=document.getElementById('passwordInput');
+  const email=emailEl?emailEl.value.trim():'';
+  const pass=passEl?passEl.value:'';
+  if(!email || !email.includes('@') || !pass){
+    if(emailEl){ emailEl.classList.add('shake'); setTimeout(()=>emailEl.classList.remove('shake'),400); }
+    if(passEl){ passEl.classList.add('shake'); setTimeout(()=>passEl.classList.remove('shake'),400); }
+    alert('Enter valid email and password');
+    return;
+  }
+  localStorage.setItem(LS.user, email);
+  if(!localStorage.getItem(LS.scans)) localStorage.setItem(LS.scans,'5');
+  showMain();
+}
+
+function payYearly(){ selectPlan('yearly'); window.open(STRIPE_LINK,'_blank'); }
+function payWeekly(){ selectPlan('weekly'); window.open(STRIPE_LINK,'_blank'); }
+function payMonthly(){ selectPlan('monthly'); window.open(STRIPE_LINK,'_blank'); }
+
+function continueToApp(){ showMain(); }
+function handleSuccess(){
+  localStorage.setItem(LS.pro,'true');
+  hideAll();
+  document.getElementById('successView').style.display='block';
+  setTimeout(()=>{ showMain(); }, 3000);
+}
+
+function openSnap(){ document.getElementById('snapForm').classList.remove('hidden'); }
+function closeSnap(){ document.getElementById('snapForm').classList.add('hidden'); }
+function openTrip(){ document.getElementById('tripForm').classList.remove('hidden'); }
+function closeTrip(){ document.getElementById('tripForm').classList.add('hidden'); }
+
+function saveReceipt(){
+  const merchant=document.getElementById('rMerchant').value.trim();
+  const amount=parseFloat(document.getElementById('rAmount').value);
+  const category=document.getElementById('rCategory').value;
+  if(!merchant || !amount){ alert('Add merchant and amount'); return; }
+  let scans=parseInt(localStorage.getItem(LS.scans)||'5',10);
+  const isPro=localStorage.getItem(LS.pro)==='true';
+  if(!isPro && scans<=0){ alert('Free scans used. Continue to payment.'); showPlan(); return; }
+  const receipts=JSON.parse(localStorage.getItem(LS.receipts)||'[]');
+  receipts.unshift({id:Date.now(), merchant, amount, category, date:new Date().toISOString().slice(0,10)});
+  localStorage.setItem(LS.receipts, JSON.stringify(receipts));
+  if(!isPro){ scans=Math.max(0,scans-1); localStorage.setItem(LS.scans, String(scans)); }
+  document.getElementById('rMerchant').value=''; document.getElementById('rAmount').value='';
+  closeSnap(); render();
+}
+function saveTrip(){
+  const from=document.getElementById('tFrom').value.trim();
+  const to=document.getElementById('tTo').value.trim();
+  const miles=parseFloat(document.getElementById('tMiles').value);
+  if(!from || !to || !miles){ alert('Fill trip details'); return; }
+  const trips=JSON.parse(localStorage.getItem(LS.trips)||'[]');
+  trips.unshift({id:Date.now(), from, to, miles, date:new Date().toISOString().slice(0,10)});
+  localStorage.setItem(LS.trips, JSON.stringify(trips));
+  document.getElementById('tFrom').value=''; document.getElementById('tTo').value=''; document.getElementById('tMiles').value='';
+  closeTrip(); render();
+}
+function startGPS(){
+  if(!navigator.geolocation){ alert('GPS not available'); return; }
+  navigator.geolocation.getCurrentPosition(()=>{ alert('GPS tracking started (demo). Enter miles manually.'); }, ()=>{ alert('GPS permission denied'); });
+}
+function exportHMRC(){
+  const receipts=JSON.parse(localStorage.getItem(LS.receipts)||'[]');
+  const trips=JSON.parse(localStorage.getItem(LS.trips)||'[]');
+  let csv='Date,Type,Merchant/From,To,Category,Miles,Amount,Tax Relief\n';
+  receipts.forEach(r=>{ csv+=r.date+',Receipt,'+r.merchant+',, '+r.category+',,'+r.amount+','+(r.amount*0.2).toFixed(2)+'\n'; });
+  trips.forEach(t=>{ csv+=t.date+',Mileage,'+t.from+','+t.to+',Travel,'+t.miles+','+(t.miles*0.45).toFixed(2)+',\n'; });
+  const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='taxsnap-hmrc.csv'; a.click(); URL.revokeObjectURL(url);
+}
+function exportAccountant(){
+  const receipts=JSON.parse(localStorage.getItem(LS.receipts)||'[]');
+  const trips=JSON.parse(localStorage.getItem(LS.trips)||'[]');
+  let csv='Date,Description,Category,Amount,Mileage,Claim\n';
+  receipts.forEach(r=>{ csv+=r.date+','+r.merchant+','+r.category+','+r.amount+',,\n'; });
+  trips.forEach(t=>{ csv+=t.date+','+t.from+' to '+t.to+',Travel,'+(t.miles*0.45).toFixed(2)+','+t.miles+',\n'; });
+  const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='taxsnap-accountant.csv'; a.click(); URL.revokeObjectURL(url);
+}
+function render(){
+  const receipts=JSON.parse(localStorage.getItem(LS.receipts)||'[]');
+  const trips=JSON.parse(localStorage.getItem(LS.trips)||'[]');
+  const scans=parseInt(localStorage.getItem(LS.scans)||'5',10);
+  const isPro=localStorage.getItem(LS.pro)==='true';
+  const user=localStorage.getItem(LS.user)||'';
+
+  const totalExpenses=receipts.reduce((s,r)=>s+Number(r.amount||0),0);
+  const totalMiles=trips.reduce((s,t)=>s+Number(t.miles||0),0);
+  const mileageClaim=totalMiles*0.45;
+  const taxSaved=(totalExpenses*0.2)+ (mileageClaim*0.2);
+
+  const elTax=document.getElementById('taxSaved'); if(elTax) elTax.textContent='£'+taxSaved.toFixed(2);
+  const elMeta=document.getElementById('kpiMeta'); if(elMeta) elMeta.textContent=receipts.length+' receipts • £'+totalExpenses.toFixed(2)+' expenses • '+totalMiles.toFixed(1)+' miles';
+  const elExp=document.getElementById('totalExpenses'); if(elExp) elExp.textContent='£'+totalExpenses.toFixed(2);
+  const elMil=document.getElementById('totalMileage'); if(elMil) elMil.textContent='£'+mileageClaim.toFixed(2);
+  const elScan=document.getElementById('scanInfo'); if(elScan) elScan.textContent=isPro?'Unlimited PRO':' '+(scans)+' free left';
+  const elUser=document.getElementById('userEmail'); if(elUser) elUser.textContent=user;
+  const elPro=document.getElementById('proBadge'); if(elPro){ elPro.classList.toggle('hidden', !isPro); }
+
+  const rList=document.getElementById('receiptList');
+  if(rList){
+    rList.innerHTML = receipts.length? receipts.map(r=>'<div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:700;font-size:13px">'+r.merchant+'</div><div style="font-size:11px;color:#6B7280">'+r.category+' • '+r.date+'</div></div><div style="font-weight:800">£'+Number(r.amount).toFixed(2)+'</div></div>').join('') : '<div style="color:#9CA3AF;font-size:12px">No receipts yet. Snap your first receipt.</div>';
+  }
+  const tList=document.getElementById('tripList');
+  if(tList){
+    tList.innerHTML = trips.length? trips.map(t=>'<div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:700;font-size:13px">'+t.from+' → '+t.to+'</div><div style="font-size:11px;color:#6B7280">'+t.miles+' miles • '+t.date+'</div></div><div style="font-weight:800">£'+(t.miles*0.45).toFixed(2)+'</div></div>').join('') : '<div style="color:#9CA3AF;font-size:12px">No trips yet.</div>';
+  }
+}
+
+// On load
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('success')==='true'){ handleSuccess(); return; }
+  const user=localStorage.getItem(LS.user);
+  const pro=localStorage.getItem(LS.pro);
+  if(user){ showMain(); }
+  else { showAuth(); }
+  render();
+})();
+
+// expose global
+window.showAuth=showAuth; window.showMain=showMain; window.showPlan=showPlan; window.showPay=showPlan;
+window.doApple=doApple; window.doGoogle=doGoogle; window.doCreate=doCreate;
+window.payYearly=payYearly; window.payWeekly=payWeekly; window.payMonthly=payMonthly;
+window.continueToApp=continueToApp; window.openSnap=openSnap; window.closeSnap=closeSnap;
+window.saveReceipt=saveReceipt; window.openTrip=openTrip; window.closeTrip=closeTrip;
+window.saveTrip=saveTrip; window.startGPS=startGPS; window.exportHMRC=exportHMRC; window.exportAccountant=exportAccountant;
+window.handleSuccess=handleSuccess; window.render=render; window.selectPlan=selectPlan;
+</script>
+</body>
+</html>
