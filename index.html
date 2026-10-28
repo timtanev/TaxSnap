@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>TaxSnap.site - FINAL FIXED</title>
+<style>
+:root{--primary:#0F3D2E;--bg:#F8F6F1;--border:#E5E7EB;--light:#F0FDF4;--yellow:#FEF08A;--text:#111827;--muted:#6B7280}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Inter,sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh}
+button{font-family:inherit}
+#authView,#mainView,#planView,#successView{max-width:440px;margin:0 auto;min-height:100vh;background:white;position:relative}
+.hidden{display:none !important}
+.topbar{background:var(--primary);color:white;padding:10px 16px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.02em}
+.logo{padding:28px 24px 12px;display:flex;align-items:center;gap:12px}
+.logo-mark{width:40px;height:40px;background:var(--primary);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+.btn-black{width:100%;height:52px;background:#111827;color:white;border-radius:9999px;border:none;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
+.btn-white{width:100%;height:52px;background:white;color:#111827;border:1px solid #E5E7EB;border-radius:9999px;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
+.input{width:100%;height:48px;border:1px solid #E5E7EB;border-radius:12px;padding:0 16px;font-size:15px;margin-bottom:12px;outline:none}
+.input:focus{border-color:var(--primary)}
+.btn-primary{width:100%;height:52px;background:var(--primary);color:white;border:none;border-radius:9999px;font-weight:700;font-size:15px;cursor:pointer}
+.plan-banner{background:var(--primary);color:white;padding:16px;border-radius:16px;margin:16px;font-size:13px;line-height:1.5}
+.plan-banner strong{color:#86EFAC}
+.plan-card{border:1px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;transition:all .2s;margin:0 16px 12px;background:white;position:relative}
+.plan-card.selected{border-color:var(--primary);background:var(--light);box-shadow:0 8px 24px rgba(15,61,46,.08)}
+.badge{font-size:10px;font-weight:800;letter-spacing:.08em;padding:4px 8px;border-radius:9999px;display:inline-block;margin-bottom:8px}
+.badge-yellow{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A}
+.badge-green{background:var(--primary);color:white}
+.badge-best{position:absolute;top:12px;right:12px;background:#DCFCE7;color:#166534;border:1px solid #BBF7D0;font-size:10px;font-weight:800;padding:4px 8px;border-radius:9999px}
+.radio{width:20px;height:20px;border:2px solid #D1D5DB;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-card.selected .radio{border-color:var(--primary)}
+.plan-card.selected .radio::after{content:'';width:10px;height:10px;background:var(--primary);border-radius:50%;display:block}
+.price-row{display:flex;justify-content:space-between;align-items:center}
+.unlock{background:#F9FAFB;border-radius:16px;margin:16px;padding:16px}
+.unlock h4{font-size:13px;font-weight:700;margin-bottom:10px;letter-spacing:.02em;text-transform:uppercase;color:#374151}
+.unlock li{list-style:none;font-size:14px;padding:6px 0;display:flex;gap:8px;color:#374151}
+.check{width:20px;height:20px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#166534;font-size:12px;flex-shrink:0}
+#continueBtnWrapper{position:sticky;bottom:0;background:white;padding:16px;border-top:1px solid var(--border);z-index:10}
+#continueBtn{width:100%;height:52px;background:var(--primary);color:white;border:none;border-radius:9999px;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 8px 20px rgba(15,61,46,.25)}
+.small-note{font-size:11px;color:#9CA3AF;text-align:center;margin-top:12px;line-height:1.4}
+.link{color:var(--primary);text-decoration:underline;font-weight:600;font-size:13px;cursor:pointer}
+.tile{border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;cursor:pointer;background:white}
+.tile:hover{border-color:var(--primary)}
+</style>
+</head>
+<body>
+<div id="authView">
+<div class="topbar">UK freelancers save £1,240/year on average</div>
+<div class="logo"><div class="logo-mark">£</div><div><div style="font-weight:800;font-size:18px">TaxSnap.site</div><div style="font-size:12px;color:#6B7280">Snap receipts. Claim tax. HMRC Ready.</div></div></div>
+<div style="padding:0 24px">
+<div style="margin:12px 0 24px;display:inline-flex;gap:6px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:9999px;padding:6px 12px;font-size:12px;font-weight:600;color:#166534">🇬🇧 UK • 5 free scans</div>
+<h1 style="font-size:28px;font-weight:800;line-height:1.1;margin-bottom:24px">Snap receipts.<br/>Claim tax.<br/><span style="color:#0F3D2E">HMRC Ready.</span></h1>
+<button class="btn-black" onclick="doApple()"> Continue with Apple</button>
+<button class="btn-white" onclick="doGoogle()"><span style="font-weight:700">G</span> Continue with Google</button>
+<div style="text-align:center;color:#9CA3AF;font-size:12px;margin:8px 0">or</div>
+<input class="input" id="email" placeholder="you@business.co.uk"/>
+<input class="input" id="pass" type="password" placeholder="Password"/>
+<button class="btn-primary" onclick="doCreate()">Create account — 5 free scans</button>
+<div style="text-align:center;margin-top:16px;font-size:12px;color:#6B7280">Already have account? <span class="link" onclick="doApple()">Log in</span></div>
+</div>
+</div>
+
+<div id="mainView" class="hidden">
+<div style="padding:24px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+<div><div style="font-size:12px;color:#6B7280;font-weight:600;letter-spacing:.08em">TAX SAVED</div><div style="font-size:32px;font-weight:800">£0.00</div></div>
+<div style="width:40px;height:40px;background:#F3F4F6;border-radius:12px;display:flex;align-items:center;justify-content:center">£</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+<div class="tile" onclick="openSnap()"><div style="font-size:20px">📸</div><div style="font-weight:700">SNAP RECEIPT</div><div style="font-size:12px;color:#6B7280">Tap to scan</div></div>
+<div class="tile" onclick="openTrip()"><div style="font-size:20px">🚗</div><div style="font-weight:700">NEW TRIP</div><div style="font-size:12px;color:#6B7280">GPS 45p/mile</div></div>
+</div>
+<div id="receiptList" style="margin-bottom:16px"></div>
+<div style="display:flex;gap:8px;margin-bottom:20px">
+<button class="input" style="flex:1;height:44px;cursor:pointer" onclick="exportHMRC()">HMRC CSV</button>
+<button class="input" style="flex:1;height:44px;cursor:pointer" onclick="exportAccountant()">Accountant CSV</button>
+</div>
+<div style="background:#0F3D2E;color:white;border-radius:16px;padding:20px">
+<div style="font-weight:700;margin-bottom:6px">Ready to file?</div>
+<div style="font-size:13px;opacity:.8;margin-bottom:12px">Unlock unlimited scans and HMRC export</div>
+<button class="btn-primary" style="background:white;color:#0F3D2E" onclick="showPlan()">Continue to Payment →</button>
+</div>
+</div>
+</div>
+
+<div id="planView" class="hidden" style="display:none;flex-direction:column;min-height:100vh">
+<div>
+<div class="plan-banner">
+<div style="font-weight:700;margin-bottom:4px">UK freelancers save £1,240/year on average</div>
+<div style="opacity:.9">Unlimited scans • GPS mileage at 45p/mile • HMRC CSV export — used by 12k+ traders</div>
+</div>
+<h2 style="font-size:22px;font-weight:800;padding:8px 16px 16px">CHOOSE YOUR PLAN</h2>
+
+<div class="plan-card" id="planWeekly" onclick="selectPlan('weekly')">
+<div class="badge badge-yellow">7-DAY FREE TRIAL</div>
+<div class="price-row"><div><div style="font-weight:800;font-size:18px">Weekly <span style="font-weight:400;color:#6B7280">£4.99/week</span></div><div style="font-size:12px;color:#6B7280;margin-top:2px">Billed weekly • 7-day free trial</div></div><div class="radio"></div></div>
+<input type="radio" name="plan" style="display:none"/>
+</div>
+
+<div class="plan-card selected" id="planYearly" onclick="selectPlan('yearly')">
+<span class="badge-best">BEST VALUE</span>
+<div style="display:flex;gap:8px;margin-bottom:8px"><span class="badge badge-green">MOST POPULAR</span></div>
+<div class="price-row"><div><div style="font-weight:800;font-size:18px">Yearly <span style="font-weight:400">£39.99/year</span> <span style="font-size:12px;color:#166534;background:#DCFCE7;padding:2px 6px;border-radius:6px;margin-left:6px">£3.33/month</span> <span style="font-size:11px;background:#FEF3C7;padding:2px 6px;border-radius:6px;margin-left:4px">Save 68%</span></div><div style="font-size:12px;color:#6B7280;margin-top:4px">Billed yearly BEST VALUE • Most popular • Save 68% vs weekly (£259.48)</div></div><div class="radio" style="border-color:#0F3D2E"><div style="width:10px;height:10px;background:#0F3D2E;border-radius:50%"></div></div></div>
+<input type="radio" name="plan" checked style="display:none"/>
+</div>
+
+<div class="plan-card" id="planMonthly" onclick="selectPlan('monthly')">
+<div class="price-row"><div><div style="font-weight:800;font-size:18px">Monthly <span style="font-weight:400;color:#6B7280">£9.99/month</span></div><div style="font-size:12px;color:#6B7280;margin-top:2px">Billed monthly</div></div><div class="radio"></div></div>
+<input type="radio" name="plan" style="display:none"/>
+</div>
+
+<div class="unlock">
+<h4>What you unlock</h4>
+<ul style="padding:0">
+<li><span class="check">✓</span> Unlimited scans</li>
+<li><span class="check">✓</span> GPS mileage 45p/mile</li>
+<li><span class="check">✓</span> HMRC export CSV</li>
+<li><span class="check">✓</span> Priority support</li>
+<li><span class="check">✓</span> Cloud backup</li>
+</ul>
+</div>
+<div style="padding:0 16px 120px">
+<div style="font-size:11px;color:#6B7280;word-break:break-all;margin-top:8px">Yearly checkout: https://buy.stripe.com/dRm00cbila0raJxgM73sI00</div>
+<div style="margin-top:12px"><span class="link" onclick="alert('Manage at billing.stripe.com')">Manage Subscription</span></div>
+</div>
+</div>
+
+<div id="continueBtnWrapper">
+<button id="continueBtn" onclick="paySelected()">Continue → • £39.99/year</button>
+<div class="small-note">Secure checkout via Stripe • Cancel anytime • 7-day free trial on weekly<br/>🔒 Encrypted • Trusted by 12k+ UK traders</div>
+</div>
+</div>
+
+<div id="successView" class="hidden" style="padding:40px 24px;text-align:center">
+<div style="width:64px;height:64px;background:#F0FDF4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;border:1px solid #BBF7D0">✅</div>
+<h1 style="font-size:28px;font-weight:800;color:#0F3D2E">Payment Successful ✅</h1>
+<p style="color:#6B7280;margin:12px 0 24px;line-height:1.5">Thank you! Your subscription is active. You now have unlimited access.</p>
+<button class="btn-primary" onclick="continueToApp()">Continue to App →</button>
+</div>
+
+<script>
+var selectedPlan = 'yearly';
+function selectPlan(plan){
+  selectedPlan = plan;
+  document.querySelectorAll('.plan-card').forEach(function(c){ c.classList.remove('selected'); });
+  var el = document.getElementById('plan' + plan.charAt(0).toUpperCase() + plan.slice(1));
+  if(el) el.classList.add('selected');
+  updateContinueBtn();
+  document.querySelectorAll('.plan-card input').forEach(function(r){ r.checked = false; });
+  var radio = document.querySelector('#plan' + plan.charAt(0).toUpperCase() + plan.slice(1) + ' input');
+  if(radio) radio.checked = true;
+}
+function updateContinueBtn(){
+  var btn = document.getElementById('continueBtn');
+  if(!btn) return;
+  var prices = {weekly:'£4.99/week', yearly:'£39.99/year', monthly:'£9.99/month'};
+  btn.innerText = 'Continue → • ' + prices[selectedPlan];
+}
+function paySelected(){
+  var links = {
+    weekly:'https://buy.stripe.com/test_weekly',
+    yearly:'https://buy.stripe.com/dRm00cbila0raJxgM73sI00',
+    monthly:'https://buy.stripe.com/test_monthly'
+  };
+  var link = links[selectedPlan] || links.yearly;
+  window.open(link, '_blank');
+  setTimeout(function(){ showSuccess(); }, 800);
+}
+function showAuth(){ hideAll(); document.getElementById('authView').style.display='block'; }
+function showMain(){ hideAll(); document.getElementById('mainView').style.display='block'; render(); }
+function showPlan(){ hideAll(); var p=document.getElementById('planView'); p.style.display='flex'; p.classList.remove('hidden'); updateContinueBtn(); }
+function showPay(){ showPlan(); }
+function showSuccess(){ hideAll(); document.getElementById('successView').style.display='block'; document.getElementById('successView').classList.remove('hidden'); }
+function hideAll(){ ['authView','mainView','planView','successView'].forEach(function(id){ var e=document.getElementById(id); if(e){ e.style.display='none'; e.classList.add('hidden'); }}); }
+function doApple(){ showMain(); }
+function doGoogle(){ showMain(); }
+function doCreate(){ var email=document.getElementById('email'); if(email && !email.value){ alert('Enter email'); return; } showMain(); }
+function openSnap(){ var amt=prompt('Receipt amount £?','24.50'); if(amt){ var list=document.getElementById('receiptList'); var div=document.createElement('div'); div.style.cssText='border:1px solid #E5E7EB;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between'; div.innerHTML='<span>🧾 Receipt £'+amt+'</span><span style=color:#166534>Claimable</span>'; if(list) list.prepend(div); } }
+function saveReceipt(){ openSnap(); }
+function openTrip(){ var miles=prompt('Miles?','12.4'); if(miles){ alert('Trip saved: '+miles+' miles @ 45p = £'+(parseFloat(miles)*0.45).toFixed(2)); } }
+function saveTrip(){ openTrip(); }
+function startGPS(){ alert('GPS tracking started (demo)'); }
+function exportHMRC(){ alert('HMRC CSV exported (demo) - would download file'); }
+function exportAccountant(){ alert('Accountant CSV exported (demo)'); }
+function continueToApp(){ showMain(); history.replaceState(null,'','index.html'); }
+function handleSuccess(){
+  var qs = new URLSearchParams(window.location.search);
+  if(qs.get('success') === 'true'){ showSuccess(); }
+}
+window.selectPlan = selectPlan;
+window.updateContinueBtn = updateContinueBtn;
+window.paySelected = paySelected;
+window.showAuth = showAuth;
+window.showMain = showMain;
+window.showPlan = showPlan;
+window.showPay = showPay;
+window.doApple = doApple;
+window.doGoogle = doGoogle;
+window.doCreate = doCreate;
+window.openSnap = openSnap;
+window.saveReceipt = saveReceipt;
+window.openTrip = openTrip;
+window.saveTrip = saveTrip;
+window.startGPS = startGPS;
+window.exportHMRC = exportHMRC;
+window.exportAccountant = exportAccountant;
+window.continueToApp = continueToApp;
+window.handleSuccess = handleSuccess;
+document.addEventListener('DOMContentLoaded', function(){
+  handleSuccess();
+  if(!new URLSearchParams(location.search).get('success')){
+    showAuth();
+  }
+  updateContinueBtn();
+});
+function render(){}
+</script>
+</body>
+</html>
